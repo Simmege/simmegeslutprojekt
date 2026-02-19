@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projekt #2</title>
-    <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
-</head>
-<body>
-  <h1>Webbserverprogrammering 1 - Slutprojekt</h1>
-  <img src="/img/glhf.png">
-</body>
-</html>
+<h1>Våra Proteinkakor - Strong Bakes</h1>
+
+<ul>
+  <% @products.each do |product| %>
+    <li>
+      <strong>ID:</strong> <%= product['id'] %> <br>
+      <strong>Smak:</strong> <%= product['smak'] %> <br>
+      <strong>Pris:</strong> <%= product['25kr'] %>
+      <hr>
+    </li>
+  <% end %>
+</ul>
+
+<p><a href="/">Tillbaka till startsidan</a></p>

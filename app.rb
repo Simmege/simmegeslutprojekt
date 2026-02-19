@@ -5,8 +5,7 @@ class App < Sinatra::Base
 
     setup_development_features(self)
 
-    # Funktion för att prata med databasen
-    # Exempel på användning: db.execute('SELECT * FROM fruits')
+
     def db
       return @db if @db
       @db = SQLite3::Database.new(DB_PATH)
@@ -17,7 +16,13 @@ class App < Sinatra::Base
 
     # Routen /
     get '/' do
-        erb :index
+        erb (:"views/index")
     end
+
+    get '/products' do
+      @products = db.execute('SELECT * FROM products')
+      erb (:"views/index")
+    end
+    
 
 end
