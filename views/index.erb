@@ -3,12 +3,16 @@
 <ul>
   <% @products.each do |product| %>
     <li>
-      <strong>ID:</strong> <%= product['id'] %> <br>
       <strong>Smak:</strong> <%= product['smak'] %> <br>
-      <strong>Pris:</strong> <%= product['25kr'] %>
+      <strong>Pris:</strong> <%= product['pris'] %> kr
+      
+      <a href="/add/<%= product['id'] %>">Lägg till i varukorgen</a>
       <hr>
     </li>
-  <% end %>
-</ul>
 
-<p><a href="/">Tillbaka till startsidan</a></p>
+  <% end %>
+  <li>
+    <a href = "/cart"> Varukorgen</a>
+
+  </li>
+</ul>

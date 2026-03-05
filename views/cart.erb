@@ -1,0 +1,16 @@
+<h1>Varukorg</h1>
+
+<ul>
+  <% @items.each do |item| %>
+    <li>
+      <%= item['smak'] %> - <%= item['quantity'] %> st 
+      <%= item['pris'] * item['quantity'] %> kr
+      
+      <form action="/cart/<%= item['cart_id'] %>/delete" method="post">
+        <input type="submit" value="ta bort">
+      </form>
+    </li>
+  <% end %>
+</ul>
+
+<a href="/products">Fortsätt handla</a>
