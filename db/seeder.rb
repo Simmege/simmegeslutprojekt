@@ -24,7 +24,7 @@ class Seeder
 
     db.execute('CREATE TABLE cart (
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
-                  product_id INTEGER NOT NULL,
+                  product_id INTEGER UNIQUE,
                   quantity INTEGER)')
   end
 

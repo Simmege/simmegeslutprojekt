@@ -26,33 +26,41 @@ class App < Sinatra::Base
   end
     
 
-    get '/add/:id' do
-      db = SQLite3::Database.new('db/strong_bakes.db')
-      db.execute("INSERT INTO cart (product_id, quantity) VALUES (?, 1)", params[:id])
-      redirect '/products'
-    end
 
     get '/cart' do
-      db = SQLite3::Database.new('db/strong_bakes.db')
-      db.results_as_hash = true
       
       @items = db.execute("
-        SELECT cart.id AS cart_id, products.smak, products.pris, cart.quantity 
-        FROM cart 
-        JOIN products ON cart.product_id = products.id")
-      
-      @total = 0
-      @items.each do |item|
-      @total += item['pris'] * item['quantity']
-      end
+      SELECT cart.*, products.smak 
+      FROM cart
+      JOIN products ON cart.product_id = products.id
+     ")
+
       erb :cart
     end
 
+
     post '/cart/:id/delete' do |id|
-      db.execute("DELETE FROM cart WHERE id =?",[id]).first
-  
-      redirect ("/cart")
+      
+      db.execute("UPDATE cart SET quantity = quantity - 1 WHERE id = ?", [id])
+
+      db.execute("DELETE FROM cart WHERE quantity <= 0")
+      
+      redirect "/cart"
     end
+
+    get '/add/:id' do
+      c_id = params[:id]
+      item = db.execute("SELECT * FROM cart WHERE product_id = ?", [c_id]).first
+
+      if item
+        db.execute("UPDATE cart SET quantity = quantity + 1 WHERE product_id = ?", [c_id])
+      else
+        db.execute("INSERT INTO cart (product_id, quantity) VALUES (?, 1)", [c_id])
+      end
+      redirect "/products"
+    end
+
+
 
     
 
