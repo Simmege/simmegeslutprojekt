@@ -1,4 +1,6 @@
 require 'sqlite3'
+require_relative '../config'
+require 'bcrypt'
 
 class Seeder
   DB_PATH = 'db/strong_bakes.db'
@@ -13,6 +15,7 @@ class Seeder
   def self.drop_tables
     db.execute('DROP TABLE IF EXISTS cart')
     db.execute('DROP TABLE IF EXISTS products')
+    db.execute('DROP TABLE IF EXISTS users')
   end
 
   def self.create_tables
@@ -26,6 +29,11 @@ class Seeder
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
                   product_id INTEGER UNIQUE,
                   quantity INTEGER)')
+
+    db.execute('CREATE TABLE users (
+                  id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  username TEXT NOT NULL,              
+                  password TEXT NOT NULL)')
   end
 
   def self.populate_tables
@@ -33,6 +41,10 @@ class Seeder
     db.execute('INSERT INTO products (smak, pris) VALUES ("Salted Caramel Pump", 25)')
     db.execute('INSERT INTO products (smak, pris) VALUES ("Vanilla Power Swirl", 30)')
     db.execute('INSERT INTO products (smak, pris) VALUES ("Apple Beast", 20)')
+
+    password_hashed = BCrypt::Password.create("123")
+    p "Storing hashed password (#{password_hashed}) to DB. Clear text password (123) never saved."
+    db.execute('INSERT INTO users (username, password) VALUES (?, ?)', ["Simmege", password_hashed])
     
 
     db.execute('INSERT INTO cart (product_id, quantity) VALUES (1, 2)')
@@ -50,7 +62,5 @@ class Seeder
   end
 end
 
-Seeder.drop_tables
-Seeder.create_tables
-Seeder.populate_tables
+
 Seeder.seed!

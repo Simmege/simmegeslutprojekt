@@ -1,4 +1,5 @@
 <h1>Våra Proteinkakor - Strong Bakes</h1>
+<a href="/login"><h2>Logga in</h2><a>
 
 <ul>
   <% @products.each do |product| %>
@@ -6,8 +7,9 @@
       <strong>Smak:</strong> <%= product['smak'] %> <br>
       <strong>Pris:</strong> <%= product['pris'] %> kr
       
-      <a href="/add/<%= product['id'] %>">Lägg till i varukorgen</a>
-      <hr>
+      <form action="/add/<%= product['id'] %>" method="post">
+        <button type="submit">Lägg till i varukorgen</button>
+      </form>
     </li>
 
   <% end %>
