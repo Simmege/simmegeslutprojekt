@@ -4,17 +4,25 @@
 <ul>
   <% @products.each do |product| %>
     <li>
-      <strong>Smak:</strong> <%= product['smak'] %> <br>
+      <a href = 'products/<%=product["id"]%>'><strong>Smak:</strong> <%= product['smak'] %> <br></a>
       <strong>Pris:</strong> <%= product['pris'] %> kr
       
       <form action="/add/<%= product['id'] %>" method="post">
         <button type="submit">Lägg till i varukorgen</button>
       </form>
+
+      <form action="/products/<%=product["id"]%>/delete" method="post">
+        <input type="submit" value="ta bort">
+      </form>
+      
+      <form action="/products/<%=product["id"]%>/update" method="get">
+        <input type ="submit" value="Skapa din egen beskrivning av våra kakor">
+      </form>
     </li>
 
   <% end %>
-  <li>
-    <a href = "/cart"> Varukorgen</a>
+    <li><a href = "/products/create"> Skapa din egen smak!</a></li>
+    <li><a href = "/cart"> Varukorgen</a></li>
 
-  </li>
+ 
 </ul>

@@ -23,7 +23,8 @@ class Seeder
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
                   smak TEXT NOT NULL,
                   pris INTEGER NOT NULL,
-                  category_id INTEGER)')
+                  category_id INTEGER,
+                  beskrivning)')
 
     db.execute('CREATE TABLE cart (
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -37,10 +38,10 @@ class Seeder
   end
 
   def self.populate_tables
-    db.execute('INSERT INTO products (smak, pris) VALUES ("Choco-Muscle Crunch", 25)')
-    db.execute('INSERT INTO products (smak, pris) VALUES ("Salted Caramel Pump", 25)')
-    db.execute('INSERT INTO products (smak, pris) VALUES ("Vanilla Power Swirl", 30)')
-    db.execute('INSERT INTO products (smak, pris) VALUES ("Apple Beast", 20)')
+    db.execute('INSERT INTO products (smak, pris, beskrivning) VALUES ("Choco-Muscle Crunch", 25, "Nothing beats the OG så att säga")')
+    db.execute('INSERT INTO products (smak, pris, beskrivning) VALUES ("Salted Caramel Pump", 25, "Seasalt, en perfekt smak för alla havsälskare")')
+    db.execute('INSERT INTO products (smak, pris, beskrivning) VALUES ("Vanilla Power Swirl", 30, "Vaniljglass och vaniljsmaker generellt: Ett säkert men mycket simpelt alternativ")')
+    db.execute('INSERT INTO products (smak, pris, beskrivning) VALUES ("Apple Beast", 20, "Perfekt för dig som vill bulka på frukt!")')
 
     password_hashed = BCrypt::Password.create("123")
     p "Storing hashed password (#{password_hashed}) to DB. Clear text password (123) never saved."

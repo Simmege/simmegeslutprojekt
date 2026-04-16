@@ -96,6 +96,23 @@ class App < Sinatra::Base
       erb :cart
     end
 
+    get '/products/create' do
+      erb(:create_product)
+
+    end
+
+    post '/products/create' do
+      p_smak = params["smak"]
+      p_desc = params["beskrivning"]
+      p_pris = params["pris"]
+      db.execute("INSERT INTO products (smak, beskrivning, pris) VALUES (?,?,?)", [p_smak, p_desc, p_pris])
+      redirect("/products")
+    end
+    get '/products/:id' do |id|
+      @products = db.execute("SELECT * FROM products WHERE id =?", [id]).first
+      erb(:show)
+    end
+
 
     post '/cart/:id/delete' do |id|
       
@@ -118,6 +135,25 @@ class App < Sinatra::Base
       redirect "/products"
     end
 
+    post "/products/:id/delete" do |id|
+      db.execute("DELETE FROM products WHERE id =?",[id])
+
+      redirect ("/products")
+    end
+
+    get '/todos/:id/update' do |id|
+      @product_info = db.execute("SELECT * FROM products WHERE id =?",[id]).first
+      p @product_info
+      erb(:edit)
+    end
+
+    post '/todos/:id/update' do |id|
+      p_desc = params["beskrivning"]
+  
+      db.execute("UPDATE products SET description=? WHERE id =?", [p_desc, id])
+  
+      redirect ("/todos")
+    end
 
     get '/login' do
      erb :login
