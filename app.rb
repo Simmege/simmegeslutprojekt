@@ -31,6 +31,24 @@ class App < Sinatra::Base
       end
     end
 
+    helpers do
+      def is_admin?
+
+        !!session[:user_id]
+      end
+
+      def require_admin
+        unless is admin?
+          ap "Åtkomst nekad, du är inte inloggad"
+          halt 401, redirect('/access_denied')
+        end
+      end
+    end
+
+    post '/logout' do
+      session.clear
+      redirect '/products'
+    end
 
 
 
@@ -40,12 +58,11 @@ class App < Sinatra::Base
   end
     
   get '/admin' do
-    if session[:user_id]
-      erb(:"admin_index")
+    if session[:user_id] == 1
+      erb :"admin_index"
     else
       ap "/admin : Access denied."
-      status 401
-      redirect '/acces_denied'
+      redirect '/products'
     end
   end
 
@@ -60,6 +77,7 @@ class App < Sinatra::Base
     WHERE username = ?",
     [request_username]).first
   
+    p user 
 
     unless user
       ap "/login : Invalid username."
@@ -96,8 +114,8 @@ class App < Sinatra::Base
       erb :cart
     end
 
-    get '/products/create' do
-      erb(:create_product)
+    get '/products/new' do
+      erb(:new)
 
     end
 
@@ -141,22 +159,40 @@ class App < Sinatra::Base
       redirect ("/products")
     end
 
-    get '/todos/:id/update' do |id|
+    get '/products/:id/edit' do |id|
       @product_info = db.execute("SELECT * FROM products WHERE id =?",[id]).first
       p @product_info
-      erb(:edit)
+      if is_admin?
+        erb(:edit)
+      else
+        erb(:acces_denied)
+      end
     end
 
-    post '/todos/:id/update' do |id|
+    post '/products/:id/update' do |id|
       p_desc = params["beskrivning"]
   
-      db.execute("UPDATE products SET description=? WHERE id =?", [p_desc, id])
+      db.execute("UPDATE products SET beskrivning=? WHERE id =?", [p_desc, id])
   
-      redirect ("/todos")
+      redirect ("/products")
     end
 
     get '/login' do
      erb :login
+    end
+
+    get "/new_user" do
+      erb :new_user
+    end
+
+    post "/new_user" do
+      u_user = params["username"]
+      u_password = params["password"]
+
+      password_hashed = BCrypt::Password.create(u_password)
+
+      db.execute("INSERT INTO users (username, password) VALUES (?,?)", [u_user, password_hashed])
+      redirect("/products")
     end
 
 

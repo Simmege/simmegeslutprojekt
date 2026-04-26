@@ -1,28 +1,40 @@
-<h1>Våra Proteinkakor - Strong Bakes</h1>
-<a href="/login"><h2>Logga in</h2><a>
+<div class="products-page">
+  <h1>Våra Proteinkakor - Strong Bakes</h1>
 
-<ul>
-  <% @products.each do |product| %>
-    <li>
-      <a href = 'products/<%=product["id"]%>'><strong>Smak:</strong> <%= product['smak'] %> <br></a>
-      <strong>Pris:</strong> <%= product['pris'] %> kr
-      
-      <form action="/add/<%= product['id'] %>" method="post">
-        <button type="submit">Lägg till i varukorgen</button>
-      </form>
+  <a class="login-link" href="/login">Logga in</a>
 
-      <form action="/products/<%=product["id"]%>/delete" method="post">
-        <input type="submit" value="ta bort">
-      </form>
-      
-      <form action="/products/<%=product["id"]%>/update" method="get">
-        <input type ="submit" value="Skapa din egen beskrivning av våra kakor">
-      </form>
-    </li>
+  <ul class="product-list">
+    <% @products.each do |product| %>
+      <li class="product-card">
+        <a class="product-title" href="/products/<%= product["id"] %>">
+          <strong>Smak:</strong> <%= product["smak"] %>
+        </a>
 
-  <% end %>
-    <li><a href = "/products/create"> Skapa din egen smak!</a></li>
-    <li><a href = "/cart"> Varukorgen</a></li>
+        <p class="product-price">
+          <strong>Pris:</strong> <%= product["pris"] %> kr
+        </p>
 
- 
-</ul>
+        <div class="product-actions">
+          <form action="/add/<%= product['id'] %>" method="post">
+            <button type="submit">Lägg till i varukorgen</button>
+          </form>
+
+          <form action="/products/<%= product["id"] %>/delete" method="post">
+            <input type="submit" value="Ta bort">
+          </form>
+
+          <form action="/products/<%= product["id"] %>/edit" method="get">
+            <input type="submit" value="Ändra beskrivningen">
+          </form>
+        </div>
+      </li>
+    <% end %>
+
+    <li class="extra-links"><a href="/products/new">Skapa din egen smak!</a></li>
+    <li class="extra-links"><a href="/cart">Varukorgen</a></li>
+    <li class="extra-links"><a href="/new_user">Skapa ny användare</a></li>
+    <li class="extra-links"><form action="/logout" method="post">
+     <button type="submit">Logga ut</button>
+      </form></li>
+  </ul>
+</div>

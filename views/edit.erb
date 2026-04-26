@@ -1,8 +1,8 @@
-<h1> Skriv en egen beskrivning av kakan!</h1>
+<h1> Ändra beskrivning</h1>
 <form action="/products/<%= @product_info["id"]%>/update" method="post">
 
     <label> Ny beskrivning
-        <input type = "text" name = "p_desc" value="<%=@product_info["beskrivning"]%>">
+        <input type = "text" name = "beskrivning" value="<%=@product_info["beskrivning"]%>">
     </label>
     <input type="submit" value="uppdatera">
 </form>

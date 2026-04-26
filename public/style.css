@@ -1,7 +1,144 @@
 body {
-  font-family: sans-serif;
-  color: #666;
-  background-color: #f1f1f1;
-  font-size: x-large;
-  margin: 1em;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg, #fff8ef 0%, #f6e7d3 100%);
+  color: #2d1b12;
+}
+
+.products-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.7rem;
+  margin-bottom: 15px;
+  color: #5c2c16;
+  letter-spacing: 1px;
+}
+
+.login-link {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 40px auto;
+  text-decoration: none;
+  background-color: #5c2c16;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.login-link:hover {
+  background-color: #7a3b1f;
+  transform: translateY(-2px);
+}
+
+.product-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.product-card {
+  background-color: white;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border: 2px solid #f0d2b3;
+  transition: 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+}
+
+.product-title {
+  display: inline-block;
+  font-size: 1.25rem;
+  color: #5c2c16;
+  text-decoration: none;
+  margin-bottom: 12px;
+}
+
+.product-title:hover {
+  color: #8d4726;
+}
+
+.product-price {
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+  color: #3d2418;
+}
+
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+button,
+input[type="submit"] {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button {
+  background-color: #5c2c16;
+  color: white;
+}
+
+button:hover {
+  background-color: #7a3b1f;
+}
+
+input[type="submit"] {
+  background-color: #e8c39e;
+  color: #2d1b12;
+}
+
+input[type="submit"]:hover {
+  background-color: #d9ab7c;
+}
+
+.extra-links {
+  background-color: #fff;
+  border: 2px dashed #c9895b;
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.extra-links a {
+  text-decoration: none;
+  color: #5c2c16;
+  font-size: 1.1rem;
+}
+
+.extra-links a:hover {
+  color: #8d4726;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .products-page {
+    padding: 30px 15px;
+  }
 }
